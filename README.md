@@ -42,4 +42,4 @@ You can download PathTools from the ![Releases page](https://github.com/Timthree
 <img src="https://user-images.githubusercontent.com/43152358/106408681-7c1f3980-6404-11eb-9735-27d9f3822280.png" width=75% height=75%>
 
 #### Verifying directories exist
-![PathTools screenshot](https://github.com/Timthreetwelve/PathTools/blob/main/Images/powershell_1.png?raw=true)
+![PathTools screenshot](https://github.com/Timthreetwelve/PathTools/blob/main/Images/powershell.png?raw=true)
