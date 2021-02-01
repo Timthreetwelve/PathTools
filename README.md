@@ -34,7 +34,6 @@ You can download PathTools from the ![Releases page](https://github.com/Timthree
 👉  PathTools requires **.NET 5** 👈  If you don't have the .NET 5 Desktop Runtime you can get it here
 [Download .NET 5.0 Runtime](https://dotnet.microsoft.com/download/dotnet/current/runtime)
 
-<br/>
 #### Main windows showing changes
 <img src="https://user-images.githubusercontent.com/43152358/106408463-234fa100-6404-11eb-9a07-9a6ce944c8de.png" width=75% height=75%>
 
