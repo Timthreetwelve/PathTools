@@ -35,13 +35,11 @@ You can download PathTools from the ![Releases page](https://github.com/Timthree
 [Download .NET 5.0 Runtime](https://dotnet.microsoft.com/download/dotnet/current/runtime)
 
 <br/>
+#### Main windows showing changes
+<img src="https://user-images.githubusercontent.com/43152358/106408463-234fa100-6404-11eb-9a07-9a6ce944c8de.png" width=75% height=75%>
 
-![PathTools screenshot](https://github.com/Timthreetwelve/PathTools/blob/main/Images/PathTools_1.png?raw=true)
+#### Displaying LongPathsEnable
+<img src="https://user-images.githubusercontent.com/43152358/106408681-7c1f3980-6404-11eb-9735-27d9f3822280.png" width=75% height=75%>
 
-
-
-![PathTools screenshot](https://github.com/Timthreetwelve/PathTools/blob/main/Images/PathTools_2.png?raw=true)
-
-
-
-![PathTools screenshot](https://github.com/Timthreetwelve/PathTools/blob/main/Images/powershell_1.png?raw=true)
+#### Verifying directories exist
+<img scr="https://user-images.githubusercontent.com/43152358/106408727-9fe27f80-6404-11eb-8c9c-3765eeef763b.png" width=75% height=75%>
