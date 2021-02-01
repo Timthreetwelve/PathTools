@@ -1,0 +1,120 @@
+﻿<Window
+    x:Class="PathTools.FindOnPathWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:PathTools"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    Title="PathTools - Find On Path"
+    Width="400"
+    Height="200"
+    MinWidth="500"
+    d:DataContext="{d:DesignInstance Type=local:UserSettings}"
+    FontSize="14"
+    Loaded="Window_Loaded"
+    MouseLeftButtonDown="Window_MouseLeftButtonDown"
+    ResizeMode="NoResize"
+    SizeToContent="WidthAndHeight"
+    WindowStartupLocation="CenterOwner"
+    WindowStyle="None"
+    mc:Ignorable="d">
+    <Border BorderBrush="#3b3b3b" BorderThickness="1">
+        <Grid x:Name="GriddyMcGridFace" Background="GhostWhite">
+
+            <!--#region Row and Column definitions-->
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="20" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="20" />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="30" />
+                <RowDefinition Height="20" />
+                <RowDefinition Height="30" />
+                <RowDefinition Height="28" />
+                <RowDefinition Height="auto" MinHeight="40" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="10" />
+            </Grid.RowDefinitions>
+            <!--#endregion-->
+
+            <!--#region Title bar-->
+            <Rectangle
+                x:Name="TitleBarRect"
+                Grid.Row="0"
+                Grid.Column="0"
+                Grid.ColumnSpan="3"
+                Fill="#3b3b3b" />
+            <TextBlock
+                Name="MessageTitle"
+                Grid.Row="0"
+                Grid.Column="1"
+                Margin="0,0,0,2"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                FontSize="17"
+                FontWeight="SemiBold"
+                Foreground="DeepSkyBlue"
+                Text="Find in PATH"
+                TextTrimming="CharacterEllipsis" />
+            <!--#endregion-->
+
+            <!--#region Text area-->
+            <TextBlock
+                Grid.Row="2"
+                Grid.Column="1"
+                Text="Enter the full name (including extension) of the file to search for"
+                TextWrapping="Wrap" />
+
+            <TextBox
+                x:Name="txtFind"
+                Grid.Row="3"
+                Grid.Column="1"
+                Height="25"
+                Padding="2,0"
+                VerticalContentAlignment="Center"
+                KeyDown="TxtFind_KeyDown" />
+
+            <TextBlock
+                x:Name="tbResult"
+                Grid.Row="4"
+                Grid.Column="1"
+                Height="auto"
+                VerticalAlignment="Center"
+                FontWeight="SemiBold" />
+            <!--#endregion-->
+
+            <!--#region Buttons-->
+            <CheckBox
+                x:Name="chkClipboard"
+                Grid.Row="5"
+                Grid.Column="1"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Center"
+                VerticalContentAlignment="Center"
+                Content="Copy result to clipboard" />
+            <StackPanel
+                Grid.Row="5"
+                Grid.Column="1"
+                HorizontalAlignment="Right"
+                Orientation="Horizontal">
+                <Button
+                    x:Name="btnFind"
+                    Width="70"
+                    Height="30"
+                    Margin="0,0"
+                    Click="BtnFind_Click"
+                    Content="Find" />
+                <Button
+                    x:Name="btnCancel"
+                    Width="70"
+                    Height="30"
+                    Margin="10,0,0,0"
+                    Click="BtnCancel_Click"
+                    Content="Cancel" />
+            </StackPanel>
+            <!--#endregion-->
+
+        </Grid>
+    </Border>
+</Window>

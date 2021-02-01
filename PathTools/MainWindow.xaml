@@ -1,0 +1,594 @@
+﻿<Window
+    x:Class="PathTools.MainWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:PathTools"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    Title="PathTools"
+    MinWidth="350"
+    MinHeight="540"
+    d:DataContext="{d:DesignInstance Type=local:UserSettings}"
+    Background="#FF646464"
+    Closing="Window_Closing"
+    KeyDown="Window_Keydown"
+    ResizeMode="CanResizeWithGrip"
+    SizeToContent="WidthAndHeight"
+    mc:Ignorable="d">
+
+    <!--#region Styles-->
+    <Window.Resources>
+        <!--  Style to right align text in the data grid  -->
+        <Style x:Key="alignRight" TargetType="TextBlock">
+            <Setter Property="HorizontalAlignment" Value="Right" />
+            <Setter Property="Margin" Value="5,0,5,0" />
+        </Style>
+
+        <!--  Style to "pad" text in cells in the data grid  -->
+        <Style x:Key="ColumnMargin5" TargetType="TextBlock">
+            <Setter Property="Margin" Value="5,0,5,0" />
+        </Style>
+
+        <!--  Style to "pad" text in cells in the data grid  -->
+        <Style x:Key="ColumnMarginR10" TargetType="TextBlock">
+            <Setter Property="Margin" Value="5,0,10,0" />
+        </Style>
+
+        <!--  Styling for Button with Blue border  -->
+        <Style x:Key="RoundCornerBlue" TargetType="{x:Type Button}">
+            <Setter Property="HorizontalContentAlignment" Value="Center" />
+            <Setter Property="VerticalContentAlignment" Value="Center" />
+            <Setter Property="Padding" Value="1" />
+            <Setter Property="Margin" Value="10" />
+            <Setter Property="Height" Value="30" />
+            <Setter Property="Width" Value="165" />
+            <Setter Property="FontSize" Value="14" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Grid x:Name="grid">
+                            <Border
+                                x:Name="border"
+                                Background="WhiteSmoke"
+                                BorderBrush="Black"
+                                BorderThickness="1"
+                                CornerRadius="5">
+                                <ContentPresenter
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"
+                                    TextElement.FontWeight="Normal" />
+                            </Border>
+                        </Grid>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="border" Property="Background" Value="Silver" />
+                            </Trigger>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="border" Property="BorderBrush" Value="DeepSkyBlue" />
+                                <Setter TargetName="border" Property="BorderThickness" Value="3" />
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter TargetName="grid" Property="Opacity" Value="0.25" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+    <!--#endregion-->
+
+    <Grid PreviewMouseWheel="Grid_PreviewMouseWheel">
+        <!--#region Row & Column definitions-->
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="2" />
+            <ColumnDefinition Width="auto" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="2" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="25" />
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="25" />
+        </Grid.RowDefinitions>
+        <!--#endregion-->
+
+        <!--#region Menu-->
+        <DockPanel
+            Grid.Column="0"
+            Grid.ColumnSpan="4"
+            Margin="0"
+            LastChildFill="False">
+            <!--  Begin menu  -->
+            <Menu
+                Height="25"
+                Padding="10,2"
+                Background="White"
+                DockPanel.Dock="Top"
+                FontSize="14">
+                <!--  File  -->
+                <MenuItem Header="_File">
+                    <MenuItem
+                        Name="mnuCopyCliboard"
+                        Click="MnuCopyCliboard_Click"
+                        Header="_Copy to Clipboard"
+                        InputGestureText="Ctrl+C">
+                        <MenuItem.Icon>
+                            <Image Source="Icons/clipboard--plus.png" />
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <MenuItem
+                        Click="MnuSaveText_Click"
+                        Header="Save Details to Text File"
+                        InputGestureText="Ctrl+S">
+                        <MenuItem.Icon>
+                            <Image Source="/Icons/disk--pencil.png" />
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <Separator />
+                    <MenuItem
+                        Name="mnuLogFile"
+                        Click="MnuLogFile_Click"
+                        Header="View _Log File">
+                        <MenuItem.Icon>
+                            <Image Source="Icons/document-text.png" />
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <Separator />
+                    <MenuItem
+                        Name="mnuExit"
+                        Click="MnuExit_Click"
+                        Header="E_xit"
+                        InputGestureText="Alt+F4">
+                        <MenuItem.Icon>
+                            <Image Source="Icons/door-open-out.png" />
+                        </MenuItem.Icon>
+                    </MenuItem>
+                </MenuItem>
+                <!--  View  -->
+                <MenuItem Header="_View" SubmenuOpened="Menu_SubmenuOpened">
+                    <MenuItem
+                        Name="mnuRefresh"
+                        Click="MnuRefresh_Click"
+                        Header="_Refresh"
+                        InputGestureText="F5">
+                        <MenuItem.Icon>
+                            <Image Source="Icons/arrow-circle-315.png" />
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <Separator />
+                    <MenuItem Header="_Zoom">
+                        <MenuItem
+                            Click="FontSmaller_Click"
+                            Header="_Smaller"
+                            InputGestureText="Ctrl+NumPad –"
+                            StaysOpenOnClick="True">
+                            <MenuItem.Icon>
+                                <Image Source="Icons/magnifier--minus.png" />
+                            </MenuItem.Icon>
+                        </MenuItem>
+                        <MenuItem
+                            Click="FontLarger_Click"
+                            Header="_Larger"
+                            InputGestureText="Ctrl+NumPad +"
+                            StaysOpenOnClick="True">
+                            <MenuItem.Icon>
+                                <Image Source="Icons/magnifier--plus.png" />
+                            </MenuItem.Icon>
+                        </MenuItem>
+                        <MenuItem
+                            Click="FontReset_Click"
+                            Header="_Reset"
+                            InputGestureText="Ctrl+NumPad 0"
+                            StaysOpenOnClick="True">
+                            <MenuItem.Icon>
+                                <Image Source="/Icons/magnifier-zoom-actual-equal.png" />
+                            </MenuItem.Icon>
+                        </MenuItem>
+                        <MenuItem.Icon>
+                            <Image Source="Icons/magnifier.png" />
+                        </MenuItem.Icon>
+                    </MenuItem>
+                </MenuItem>
+                <!--  Toolbox  -->
+                <MenuItem Name="mnuToolbox" Header="_Toolbox">
+                    <MenuItem
+                        Name="mnuCheckDupes"
+                        Click="MnuCheckDupes_Click"
+                        Header="Check for _Duplicates">
+                        <MenuItem.Icon>
+                            <Image Source="/Icons/magnifier--exclamation.png" />
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <Separator />
+                    <MenuItem x:Name="mnuFindOnPath" Click="FindOnPath_Click" Header="Find on PATH">
+                        <MenuItem.Icon>
+                            <Image Source="/Icons/binocular.png" />
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <Separator />
+                    <MenuItem
+                        Name="mnuCheckPath"
+                        Click="MnuCheckPath_Click"
+                        Header="_Verify Path">
+                        <MenuItem.Icon>
+                            <Image Source="/Icons/magnifier--arrow.png" />
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <MenuItem
+                        Name="mnuPowershell"
+                        Click="MnuPowershell_Click"
+                        Header="Verify Path (Power_Shell)">
+                        <MenuItem.Icon>
+                            <Image Source="/Icons/television.png" />
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <Separator />
+                    <MenuItem
+                        Name="mnuLongPath"
+                        Click="MnuLongPath_Click"
+                        Header="View _LongPathEnabled">
+                        <MenuItem.Icon>
+                            <Image Source="/Icons/regedit.png" />
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <MenuItem
+                        Name="mnuPathLen"
+                        Click="MnuPathLen_Click"
+                        Header="View _Path Length">
+                        <MenuItem.Icon>
+                            <Image Source="Icons/ruler2.png" />
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <Separator />
+                    <MenuItem
+                        Name="mnuCmdPrompt"
+                        Click="MnuCmdPrompt_Click"
+                        Header="Show Path in _Command Prompt">
+                        <MenuItem.Icon>
+                            <Image Source="/Icons/television-off.png" />
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <Separator />
+                    <MenuItem
+                        Name="mnuOpenEV"
+                        Click="MnuOpenEV_Click"
+                        Header="Open _Environment Variables">
+                        <MenuItem.Icon>
+                            <Image Source="Icons/external.png" />
+                        </MenuItem.Icon>
+                    </MenuItem>
+                </MenuItem>
+                <!--  Options  -->
+                <MenuItem Header="_Options">
+                    <MenuItem
+                        Name="mnuShadeAlt"
+                        Header="Shade _Alternate Rows"
+                        IsCheckable="True"
+                        IsChecked="{Binding ShadeAltRows, Source={x:Static local:UserSettings.Setting}}" />
+                    <MenuItem
+                        x:Name="mnuGridLines"
+                        Header="Show _Grid Lines"
+                        IsCheckable="True"
+                        IsChecked="{Binding ShowGridLines, Source={x:Static local:UserSettings.Setting}}" />
+                    <Separator />
+                    <MenuItem
+                        x:Name="mnuShowRightStatus"
+                        Header="Show _File &amp; Subdirectory Counts"
+                        IsCheckable="True"
+                        IsChecked="{Binding ShowRightStatus, Source={x:Static local:UserSettings.Setting}}" />
+                    <Separator />
+                    <MenuItem
+                        Name="mnuShowButtons"
+                        Header="Show _Toolbox Panel"
+                        IsCheckable="True"
+                        IsChecked="{Binding ShowToolbox, Source={x:Static local:UserSettings.Setting}}" />
+                    <Separator />
+                    <MenuItem
+                        Name="mnuTopmost"
+                        Header="_Keep on Top"
+                        IsCheckable="True"
+                        IsChecked="{Binding KeepOnTop, Source={x:Static local:UserSettings.Setting}}" />
+                    <Separator />
+                    <MenuItem
+                        Name="mnuSound"
+                        Header="Play _Sounds"
+                        IsCheckable="True"
+                        IsChecked="{Binding Sound, Source={x:Static local:UserSettings.Setting}}" />
+                    <Separator />
+                    <MenuItem
+                        Name="mnuCase"
+                        Header="_Case Sensitive Comparisons"
+                        IsCheckable="True"
+                        IsChecked="{Binding CaseSensitive, Source={x:Static local:UserSettings.Setting}}" />
+                    <Separator />
+                    <MenuItem
+                        Name="mnuLogFileSetup"
+                        Click="MnuLogFileSetup_Click"
+                        Header="_Log File Setup">
+                        <MenuItem.Icon>
+                            <Image Source="Icons/document-text.png" />
+                        </MenuItem.Icon>
+                    </MenuItem>
+                </MenuItem>
+                <!--  Help  -->
+                <MenuItem Header="_Help">
+                    <MenuItem
+                        Name="mnuAbout"
+                        Click="MnuAbout_Click"
+                        Header="_About"
+                        InputGestureText="F1">
+                        <MenuItem.Icon>
+                            <Image Source="Icons/information.png" />
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <MenuItem
+                        Name="mnuReadme"
+                        Click="MnuReadme_Click"
+                        Header="Open _Readme">
+                        <MenuItem.Icon>
+                            <Image Source="Icons/document-list.png" />
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <Separator />
+                    <MenuItem Header="_Debug">
+                        <MenuItem
+                            Name="mnuViewTemp"
+                            Click="MnuViewTemp_Click"
+                            Header="View _Debug Log File">
+                            <MenuItem.Icon>
+                                <Image Source="/Icons/document-list.png" />
+                            </MenuItem.Icon>
+                        </MenuItem>
+                        <Separator />
+                        <MenuItem Click="MnuViewSavedPath" Header="View Saved _Path File">
+                            <MenuItem.Icon>
+                                <Image Source="Icons/document-list.png" />
+                            </MenuItem.Icon>
+                        </MenuItem>
+                        <MenuItem.Icon>
+                            <Image Source="/Icons/bug.png" />
+                        </MenuItem.Icon>
+                    </MenuItem>
+                </MenuItem>
+            </Menu>
+        </DockPanel>
+        <!--#endregion Menu-->
+
+        <!--#region Toolbox panel-->
+        <Border
+            x:Name="buttonPanel"
+            Grid.Row="1"
+            Grid.RowSpan="3"
+            Grid.Column="1"
+            BorderBrush="Black"
+            BorderThickness="0,0,1,0">
+            <StackPanel
+                Background="#3b3b3b"
+                Orientation="Vertical"
+                Visibility="Visible">
+                <StackPanel MouseLeftButtonDown="ToolboxToggle_MouseLeftButtonUp" Orientation="Vertical">
+                    <TextBlock
+                        Margin="10,5,10,0"
+                        HorizontalAlignment="Center"
+                        FontSize="28"
+                        FontWeight="Bold"
+                        Foreground="DeepSkyBlue"
+                        Text="PathTools" />
+                    <TextBlock
+                        Margin="10,5,10,0"
+                        HorizontalAlignment="Center"
+                        FontSize="24"
+                        FontWeight="Bold"
+                        Foreground="DeepSkyBlue"
+                        Text="Toolbox" />
+                </StackPanel>
+                <Button
+                    Click="MnuCheckDupes_Click"
+                    Content="Check for Duplicates"
+                    Style="{DynamicResource RoundCornerBlue}"
+                    ToolTip="Check the PATH for duplicate directories" />
+                <Button
+                    Click="FindOnPath_Click"
+                    Content="Find on PATH"
+                    Style="{DynamicResource RoundCornerBlue}"
+                    ToolTip="Find a file on the PATH" />
+                <Button
+                    Click="MnuCheckPath_Click"
+                    Content="Verify PATH"
+                    Style="{DynamicResource RoundCornerBlue}"
+                    ToolTip="Verify directories in the PATH exist" />
+                <Button
+                    Click="MnuPowershell_Click"
+                    Content="Verify with PowerShell"
+                    Style="{DynamicResource RoundCornerBlue}"
+                    ToolTip="Verify directories in the PATH exist using a PowerShell script." />
+                <Button
+                    Click="MnuLongPath_Click"
+                    Content="Check LongPathEnabled"
+                    Style="{DynamicResource RoundCornerBlue}"
+                    ToolTip="Check the Registry value of LongPathsEnabled." />
+                <Button
+                    Click="MnuPathLen_Click"
+                    Content="Display PATH Length"
+                    Style="{DynamicResource RoundCornerBlue}"
+                    ToolTip="Shows the total length of the PATH variable in bytes." />
+                <Button
+                    Click="MnuCmdPrompt_Click"
+                    Content="Show PATH in CMD.exe"
+                    Style="{DynamicResource RoundCornerBlue}"
+                    ToolTip="Display the PATH in a CMD.exe window" />
+                <Button
+                    Click="MnuOpenEV_Click"
+                    Content="Environment Variables"
+                    Style="{DynamicResource RoundCornerBlue}"
+                    ToolTip="Open the Environmental Variables dialog." />
+            </StackPanel>
+        </Border>
+        <!--#endregion Toolbox panel-->
+
+        <!--#region Header panel-->
+        <StackPanel
+            x:Name="headerPanel"
+            Grid.Row="1"
+            Grid.Column="0"
+            Grid.ColumnSpan="4"
+            Background="#3b3b3b"
+            MouseLeftButtonDown="ToolboxToggle_MouseLeftButtonUp"
+            Orientation="Vertical">
+            <Border BorderBrush="Black" BorderThickness="0,1">
+                <TextBlock
+                    Margin="10,5,10,7"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    FontSize="28"
+                    FontWeight="Bold"
+                    Foreground="DeepSkyBlue"
+                    Text="PathTools" />
+            </Border>
+        </StackPanel>
+        <!--#endregion-->
+
+        <!--#region DataGrid-->
+        <DataGrid
+            x:Name="dgPath"
+            Grid.Row="2"
+            Grid.RowSpan="1"
+            Grid.Column="2"
+            Margin="7,10,7,10"
+            HorizontalAlignment="Stretch"
+            VerticalAlignment="Stretch"
+            AutoGenerateColumns="False"
+            Background="#646464"
+            BorderBrush="#646464"
+            FontSize="14"
+            HeadersVisibility="Column"
+            HorizontalGridLinesBrush="#d0d0d0"
+            HorizontalScrollBarVisibility="Auto"
+            IsReadOnly="True"
+            ItemsSource="{Binding PathList}"
+            RowHeight="24"
+            VerticalGridLinesBrush="#d0d0d0"
+            VerticalScrollBarVisibility="Auto">
+            <!--#endregion-->
+
+            <!--#region Datagrid row styles-->
+            <DataGrid.RowStyle>
+                <Style TargetType="DataGridRow">
+                    <Setter Property="Foreground" Value="Black" />
+                    <EventSetter Event="MouseEnter" Handler="DataGridRow_MouseEnter" />
+                    <EventSetter Event="MouseLeave" Handler="DataGridRow_MouseLeave" />
+                    <EventSetter Event="MouseDoubleClick" Handler="DataGridRow_MouseDoubleClick" />
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding PathStatus}" Value="Removed">
+                            <Setter Property="Foreground" Value="Red" />
+                            <Setter Property="FontWeight" Value="Normal" />
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding PathStatus}" Value="Added">
+                            <Setter Property="Foreground" Value="Green" />
+                            <Setter Property="FontWeight" Value="Normal" />
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding PathStatus}" Value="Duplicate">
+                            <Setter Property="Foreground" Value="Blue" />
+                            <Setter Property="FontWeight" Value="Normal" />
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </DataGrid.RowStyle>
+            <!--#endregion-->
+
+            <!--#region Datagrid columns-->
+            <DataGrid.Columns>
+                <DataGridTextColumn
+                    Width="auto"
+                    Binding="{Binding SeqNumber}"
+                    ElementStyle="{StaticResource alignRight}"
+                    Header="#" />
+                <DataGridTextColumn
+                    Width="92"
+                    Binding="{Binding PathStatus}"
+                    ElementStyle="{StaticResource ColumnMargin5}"
+                    Header="Status" />
+                <DataGridTextColumn
+                    Width="72"
+                    Binding="{Binding PathType}"
+                    ElementStyle="{StaticResource ColumnMargin5}"
+                    Header="Type" />
+                <DataGridTextColumn
+                    Width="auto"
+                    MinWidth="250"
+                    Binding="{Binding PathDirectory}"
+                    ElementStyle="{StaticResource ColumnMarginR10}"
+                    Header="Directory" />
+            </DataGrid.Columns>
+            <!--#endregion-->
+
+            <!--#region Datagrid context menu-->
+            <DataGrid.ContextMenu>
+                <ContextMenu FontSize="14">
+                    <MenuItem
+                        Name="cxmExplore"
+                        Click="CxmExplore_Click"
+                        Header="Open Explorer Here">
+                        <MenuItem.Icon>
+                            <Image Source="/Icons/folder-horizontal.png" />
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <Separator />
+                    <MenuItem
+                        x:Name="cxmCMD"
+                        Click="CxmTerminal_Click"
+                        Header="Open Terminal Here">
+                        <MenuItem.Icon>
+                            <Image Source="/Icons/WT.png" />
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <Separator />
+                    <MenuItem x:Name="cmxCopyCB" Click="CmxCopyCB_Click" Header="Copy to Clipboard">
+                        <MenuItem.Icon>
+                            <Image Source="/Icons/clipboard--plus.png" />
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <Separator />
+                    <MenuItem
+                        Name="cmxProps"
+                        Click="CmxProps_Click"
+                        Header="Properties">
+                        <MenuItem.Icon>
+                            <Image Source="/Icons/information.png" />
+                        </MenuItem.Icon>
+                    </MenuItem>
+                </ContextMenu>
+            </DataGrid.ContextMenu>
+        </DataGrid>
+        <!--#endregion-->
+
+        <!--#region Status bar-->
+        <DockPanel
+            Grid.Row="3"
+            Grid.Column="0"
+            Grid.ColumnSpan="4"
+            Height="24"
+            VerticalAlignment="Bottom">
+            <StatusBar
+                Padding="10,0"
+                Background="#FFFCFCFC"
+                BorderThickness="1"
+                DockPanel.Dock="Bottom"
+                FontSize="14">
+                <StatusBarItem
+                    x:Name="stbStatusL"
+                    Background="White"
+                    FontWeight="Normal" />
+                <StatusBarItem
+                    x:Name="stbStatusR"
+                    Padding="5,0"
+                    HorizontalAlignment="Right"
+                    Background="White" />
+            </StatusBar>
+        </DockPanel>
+        <!--#endregion-->
+
+    </Grid>
+</Window>

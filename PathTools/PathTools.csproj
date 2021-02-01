@@ -1,0 +1,180 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net5.0-windows</TargetFramework>
+    <UseWPF>true</UseWPF>
+    <Company>T_K</Company>
+    <Authors>Tim Kennedy</Authors>
+    <Copyright>Copyright © 2021 Tim Kennedy</Copyright>
+    <AssemblyVersion>0.1.4.32</AssemblyVersion>
+    <FileVersion>0.1.4.32</FileVersion>
+    <Version>0.1.3</Version>
+    <ApplicationIcon>Icons\PT.ico</ApplicationIcon>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <ShouldCreateLogs>False</ShouldCreateLogs>
+    <AdvancedSettingsExpanded>True</AdvancedSettingsExpanded>
+    <UpdateAssemblyVersion>False</UpdateAssemblyVersion>
+    <UpdateAssemblyFileVersion>False</UpdateAssemblyFileVersion>
+    <UpdateAssemblyInfoVersion>False</UpdateAssemblyInfoVersion>
+    <UpdatePackageVersion>True</UpdatePackageVersion>
+    <PackageVersionSettings>AssemblyVersion.None.None</PackageVersionSettings>
+    <AssemblyInfoVersionType>SettingsVersion</AssemblyInfoVersionType>
+    <InheritWinAppVersionFrom>None</InheritWinAppVersionFrom>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <DebugType>none</DebugType>
+    <DebugSymbols>false</DebugSymbols>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="C:\Users\Tim\.nuget\packages\nlog.config\4.7.7\contentFiles\any\any\NLog.config" />
+    <None Remove="Icons\arrow-circle-315.png" />
+    <None Remove="Icons\binocular.png" />
+    <None Remove="Icons\bug.png" />
+    <None Remove="Icons\clipboard--plus.png" />
+    <None Remove="Icons\disk--pencil.png" />
+    <None Remove="Icons\document-list.png" />
+    <None Remove="Icons\document-text.png" />
+    <None Remove="Icons\door-open-out.png" />
+    <None Remove="Icons\external.png" />
+    <None Remove="Icons\flashlight-shine.png" />
+    <None Remove="Icons\folder-horizontal.png" />
+    <None Remove="Icons\information.png" />
+    <None Remove="Icons\magnifier--arrow.png" />
+    <None Remove="Icons\magnifier--exclamation.png" />
+    <None Remove="Icons\magnifier--minus.png" />
+    <None Remove="Icons\magnifier--plus.png" />
+    <None Remove="Icons\magnifier.png" />
+    <None Remove="Icons\PT.ico" />
+    <None Remove="Icons\regedit.png" />
+    <None Remove="Icons\ruler2.png" />
+    <None Remove="Icons\television-off.png" />
+    <None Remove="Icons\television.png" />
+    <None Remove="Icons\terminal.png" />
+    <None Remove="Icons\WT.png" />
+    <None Remove="Images\arrow-circle-left.png" />
+    <None Remove="Images\ArrowCircle.png" />
+    <None Remove="Images\Check.png" />
+    <None Remove="Images\Error.png" />
+    <None Remove="Images\exclamation.png" />
+    <None Remove="Images\FileSave.png" />
+    <None Remove="Images\information.png" />
+    <None Remove="Images\magnifier-zoom-actual-equal.png" />
+    <None Remove="Images\Question.png" />
+    <None Remove="Images\RedX.png" />
+    <None Remove="Images\Warning.png" />
+    <None Remove="NLog.config" />
+    <None Remove="ReadMe.txt" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="NLog.config">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="ReadMe.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\.editorconfig" Link=".editorconfig" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="NLog" Version="4.7.7" />
+    <PackageReference Include="NLog.Schema" Version="4.7.7" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Icons\arrow-circle-315.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Icons\binocular.png" />
+    <Resource Include="Icons\bug.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Icons\clipboard--plus.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Icons\disk--pencil.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Icons\document-list.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Icons\document-text.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Icons\door-open-out.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Icons\external.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Icons\flashlight-shine.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Icons\folder-horizontal.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Icons\information.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Icons\magnifier--arrow.png" />
+    <Resource Include="Icons\magnifier--exclamation.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Icons\magnifier--minus.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Icons\magnifier--plus.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Icons\magnifier.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Icons\PT.ico">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Icons\regedit.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Icons\ruler2.png" />
+    <Resource Include="Icons\television-off.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Icons\television.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Icons\arrow-circle-left.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Icons\terminal.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Icons\WT.png" />
+    <Resource Include="Images\ArrowCircle.png" />
+    <Resource Include="Images\Check.png" />
+    <Resource Include="Images\Error.png" />
+    <Resource Include="Images\exclamation.png" />
+    <Resource Include="Images\FileSave.png" />
+    <Resource Include="Images\information.png" />
+    <Resource Include="Icons\magnifier-zoom-actual-equal.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Question.png" />
+    <Resource Include="Images\RedX.png" />
+    <Resource Include="Images\Warning.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="PathCheck.ps1">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+</Project>

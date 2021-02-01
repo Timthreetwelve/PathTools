@@ -1,0 +1,122 @@
+﻿<Window
+    x:Class="PathTools.LogFileWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:PathTools"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    Title="Log File Setup"
+    Width="500"
+    Height="220"
+    MinWidth="600"
+    Closing="Window_Closing"
+    FontSize="15"
+    KeyUp="Window_KeyUp"
+    Loaded="Window_Loaded"
+    MouseLeftButtonDown="Window_MouseLeftButtonDown"
+    ResizeMode="NoResize"
+    SizeToContent="Width"
+    WindowStartupLocation="CenterOwner"
+    WindowStyle="None"
+    mc:Ignorable="d">
+    <Border BorderBrush="#3b3b3b" BorderThickness="1">
+        <Grid Background="GhostWhite">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="20" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="20" />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="30" />
+                <RowDefinition Height="20" />
+                <RowDefinition Height="35" />
+                <RowDefinition Height="35" />
+                <RowDefinition Height="35" />
+                <RowDefinition Height="42" />
+                <RowDefinition Height="10" />
+            </Grid.RowDefinitions>
+            <Rectangle
+                x:Name="TitleBarRect"
+                Grid.Row="0"
+                Grid.Column="0"
+                Grid.ColumnSpan="3"
+                Fill="#3b3b3b" />
+            <TextBlock
+                Name="MessageTitle"
+                Grid.Row="0"
+                Grid.Column="1"
+                Margin="0,0,0,2"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                FontSize="17"
+                FontWeight="SemiBold"
+                Foreground="DeepSkyBlue"
+                Text="Log File Setup"
+                TextTrimming="CharacterEllipsis" />
+
+            <CheckBox
+                x:Name="cbKeepLog"
+                Grid.Row="2"
+                Grid.Column="1"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Center"
+                VerticalContentAlignment="Center"
+                Checked="CbKeepLog_Checked"
+                Content="Keep a log file"
+                Unchecked="CbKeepLog_Unchecked" />
+            <TextBlock
+                x:Name="tb1"
+                Grid.Row="3"
+                Grid.Column="1"
+                Grid.ColumnSpan="1"
+                Margin="2,0"
+                VerticalAlignment="Center"
+                Text="Full path to log file   (File will be created if it doesn't exist but folder must exist)" />
+
+            <TextBox
+                x:Name="tbLogFileName"
+                Grid.Row="4"
+                Grid.Column="1"
+                Height="25"
+                Margin="0,0,30,0"
+                MaxLength="260"
+                PreviewTextInput="TbLogFileName_PreviewTextInput"
+                TextChanged="TbLogFileName_TextChanged" />
+            <Button
+                x:Name="btnOpenDlg"
+                Grid.Row="4"
+                Grid.Column="1"
+                Width="25"
+                Height="25"
+                Margin="0,0,2,0"
+                HorizontalAlignment="Right"
+                VerticalAlignment="Center"
+                Click="BtnOpenDlg_Click"
+                Content="..." />
+
+            <StackPanel
+                Grid.Row="5"
+                Grid.Column="1"
+                HorizontalAlignment="Right"
+                Orientation="Horizontal">
+                <TextBlock
+                    x:Name="lblStatus"
+                    Width="350"
+                    Margin="0,12,43,0"
+                    VerticalAlignment="Center" />
+                <Button
+                    x:Name="btnOK"
+                    Width="70"
+                    Margin="2,12,15,2"
+                    Click="BtnOK_Click"
+                    Content="OK" />
+                <Button
+                    x:Name="btnCancel"
+                    Width="70"
+                    Margin="2,12,0,2"
+                    Click="BtnCancel_Click"
+                    Content="Cancel" />
+            </StackPanel>
+        </Grid>
+    </Border>
+</Window>
