@@ -31,7 +31,8 @@ PathTools is my first foray into .NET 5.
 You can download PathTools from the ![Releases page](https://github.com/Timthreetwelve/PathTools/releases)
 
 #### .NET 5
-👉  PathTools requires **.NET 5** 👈  If you don't have the .NET 5 Desktop Runtime you can get it here [Download .NET 5.0 Runtime](https://dotnet.microsoft.com/download/dotnet/current/runtime)
+👉  PathTools requires **.NET 5** 👈  If you don't have the .NET 5 Desktop Runtime you can get it here
+[Download .NET 5.0 Runtime](https://dotnet.microsoft.com/download/dotnet/current/runtime)
 
 <br/>
 
@@ -43,4 +44,4 @@ You can download PathTools from the ![Releases page](https://github.com/Timthree
 
 
 
-![PathTools screenshot](https://github.com/Timthreetwelve/PathTools/blob/main/Images/Ppowershell_1.png?raw=true)
+![PathTools screenshot](https://github.com/Timthreetwelve/PathTools/blob/main/Images/powershell_1.png?raw=true)
