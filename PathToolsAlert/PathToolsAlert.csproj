@@ -1,0 +1,41 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net5.0-windows</TargetFramework>
+    <UseWPF>true</UseWPF>
+    <AssemblyVersion>0.1.5.33</AssemblyVersion>
+    <FileVersion>0.1.5.33</FileVersion>
+    <ApplicationIcon>PT.ico</ApplicationIcon>
+    <Version>0.1.5</Version>
+    <Company>T_K</Company>
+    <Authors>Tim Kennedy</Authors>
+    <Description>Alert window for PathTools</Description>
+    <Copyright>Copyright © 2021 Tim Kennedy</Copyright>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <OutputPath>C:\Users\Tim\Source\Prod\PathTools\PathTools\bin\Debug\</OutputPath>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <OutputPath>C:\Users\Tim\Source\Prod\PathTools\PathTools\bin\Release\</OutputPath>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="..\PathTools\AppInfo.cs" Link="AppInfo.cs" />
+    <Compile Include="..\PathTools\SettingsManager.cs" Link="SettingsManager.cs" />
+    <Compile Include="..\PathTools\TKMessageBox.xaml.cs" Link="TKMessageBox.xaml.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="NLog" Version="4.7.7" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Page Include="..\PathTools\TKMessageBox.xaml" Link="TKMessageBox.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+
+</Project>

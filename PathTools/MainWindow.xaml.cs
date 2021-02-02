@@ -8,7 +8,6 @@ using System.Data;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using System.Media;
 using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Security;
@@ -481,18 +480,26 @@ namespace PathTools
         #region Show window if there are differences
         private void ShowOrNot()
         {
-            // If hidden and differences found, show window, optionally play sound
+            // If hidden and differences found, show alert window
             if (Visibility == Visibility.Hidden)
             {
                 if (DisplayPath.NumDifferences > 0)
                 {
-                    Visibility = Visibility.Visible;
-                    if (UserSettings.Setting.Sound)
-                    {
-                        SystemSounds.Asterisk.Play();
-                    }
-
                     WriteTempFile("Changes found, showing window");
+                    using Process pta = new Process();
+                    pta.StartInfo.FileName = @".\PathToolsAlert.exe";
+                    pta.StartInfo.Arguments = $"\"{ DisplayPath.NumDifferences} changes were found in the PATH\"";
+                    try
+                    {
+                        _ = pta.Start();
+                        Application.Current.Shutdown();
+                    }
+                    catch (Exception ex)
+                    {
+                        logTemp.Error(ex, "Unable to start PathToolsAlert.exe");
+                        Visibility = Visibility.Visible;
+                        WindowState = WindowState.Normal;
+                    }
                 }
                 // If no differences then quit
                 else
@@ -581,13 +588,10 @@ namespace PathTools
             {
                 DisplayPath row = (DisplayPath)dgPath.SelectedItem;
                 string selPath = Path.GetFullPath(row.PathDirectory);
-
-                ProcessStartInfo p = new ProcessStartInfo
-                {
-                    FileName = "Explorer.exe",
-                    Arguments = selPath
-                };
-                _ = Process.Start(p);
+                using Process exp = new Process();
+                exp.StartInfo.FileName = "Explorer.exe";
+                exp.StartInfo.Arguments = selPath;
+                _ = exp.Start();
             }
         }
         #endregion DataGrid Double Click
@@ -778,12 +782,10 @@ namespace PathTools
         {
             // Execute the PowerShell script
             string poshPath = Path.Combine(AppInfo.AppDirectory, "PathCheck.ps1");
-            ProcessStartInfo p = new ProcessStartInfo
-            {
-                FileName = "powershell.exe",
-                Arguments = $"-NoProfile -NoExit -ExecutionPolicy Bypass -File \"{poshPath}\"  "
-            };
-            _ = Process.Start(p);
+            using Process ps = new Process();
+            ps.StartInfo.FileName = "powershell.exe";
+            ps.StartInfo.Arguments = $"-NoProfile -NoExit -ExecutionPolicy Bypass -File \"{poshPath}\"  ";
+            _ = ps.Start();
         }
         #endregion Verify with PowerShell
 
@@ -930,13 +932,10 @@ namespace PathTools
             {
                 DisplayPath row = (DisplayPath)dgPath.SelectedItem;
                 string selPath = Path.GetFullPath(row.PathDirectory);
-
-                ProcessStartInfo p = new ProcessStartInfo
-                {
-                    FileName = "Explorer.exe",
-                    Arguments = selPath
-                };
-                _ = Process.Start(p);
+                using Process exp = new Process();
+                exp.StartInfo.FileName = "Explorer.exe";
+                exp.StartInfo.Arguments = selPath;
+                _ = exp.Start();
             }
         }
         #endregion Open directory in Windows Explorer
@@ -948,7 +947,7 @@ namespace PathTools
             {
                 DisplayPath row = (DisplayPath)dgPath.SelectedItem;
                 string selPath = Path.GetFullPath(row.PathDirectory).TrimEnd('\\');
-                Process wt = new Process();
+                using Process wt = new Process();
                 wt.StartInfo.FileName = "wt.exe";
                 wt.StartInfo.Arguments = $"-d \"{selPath}\" ";
                 wt.StartInfo.UseShellExecute = false;
@@ -959,7 +958,7 @@ namespace PathTools
                 catch (Win32Exception ex)
                 {
                     logTemp.Warn(ex, "Unable to launch Windows Terminal. Falling back to CMD.exe");
-                    Process cmd = new Process();
+                    using Process cmd = new Process();
                     cmd.StartInfo.FileName = "cmd.exe";
                     cmd.StartInfo.Arguments = "/k Title PathTools";
                     cmd.StartInfo.WorkingDirectory = selPath;

@@ -64,7 +64,7 @@
                 Grid.Row="0"
                 Grid.Column="0"
                 Grid.ColumnSpan="2"
-                Fill="#3b3b3b"/>
+                Fill="#3b3b3b" />
 
             <Rectangle
                 Grid.Row="1"

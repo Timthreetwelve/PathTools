@@ -202,7 +202,10 @@
                         </MenuItem.Icon>
                     </MenuItem>
                     <Separator />
-                    <MenuItem x:Name="mnuFindOnPath" Click="FindOnPath_Click" Header="Find on PATH">
+                    <MenuItem
+                        x:Name="mnuFindOnPath"
+                        Click="FindOnPath_Click"
+                        Header="Find on PATH">
                         <MenuItem.Icon>
                             <Image Source="/Icons/binocular.png" />
                         </MenuItem.Icon>
@@ -545,7 +548,10 @@
                         </MenuItem.Icon>
                     </MenuItem>
                     <Separator />
-                    <MenuItem x:Name="cmxCopyCB" Click="CmxCopyCB_Click" Header="Copy to Clipboard">
+                    <MenuItem
+                        x:Name="cmxCopyCB"
+                        Click="CmxCopyCB_Click"
+                        Header="Copy to Clipboard">
                         <MenuItem.Icon>
                             <Image Source="/Icons/clipboard--plus.png" />
                         </MenuItem.Icon>
