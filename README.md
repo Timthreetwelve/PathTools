@@ -3,6 +3,9 @@ PathTools is a collection of tools in one application that can help you display 
 
 PathTools is my first foray into .NET 5.
 
+#### Download
+You can download PathTools from the [Releases page](https://github.com/Timthreetwelve/PathTools/releases)
+
 #### Features
 
 * See at a glance if anything in the PATH has changed. Changes are color coded.
@@ -27,8 +30,6 @@ PathTools is my first foray into .NET 5.
 
 * Optionally run PathTools as a scheduled task and get notification of changes in the PATH.
 
-#### Download
-You can download PathTools from the ![Releases page](https://github.com/Timthreetwelve/PathTools/releases)
 
 #### 👉 PathTools requires **.NET 5** 👈
 If you don't have the .NET 5 Desktop Runtime you can get it here
@@ -37,10 +38,10 @@ If you don't have the .NET 5 Desktop Runtime you can get it here
 <br/>
 
 #### Main windows showing changes
-<img src="https://user-images.githubusercontent.com/43152358/106408463-234fa100-6404-11eb-9a07-9a6ce944c8de.png" width=75% height=75%>
+![](https://github.com/Timthreetwelve/PathTools/blob/main/Images/PathTools_1.png?raw=true)
 
-#### Displaying LongPathsEnable
-<img src="https://user-images.githubusercontent.com/43152358/106408681-7c1f3980-6404-11eb-9735-27d9f3822280.png" width=75% height=75%>
+#### Find on PATH
+![PathTools](https://github.com/Timthreetwelve/PathTools/blob/main/Images/PathTools_2.png?raw=true)
 
 #### Verifying directories exist
 ![PathTools screenshot](https://github.com/Timthreetwelve/PathTools/blob/main/Images/powershell.png?raw=true)
