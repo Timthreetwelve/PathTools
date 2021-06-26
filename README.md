@@ -1,4 +1,9 @@
 ## PathTools
+
+[![GitHub](https://img.shields.io/github/license/Timthreetwelve/PathTools?style=plastic)](https://github.com/Timthreetwelve/PathTools/blob/main/LICENSE)
+[![GitHub release (latest by date)](https://img.shields.io/github/v/release/Timthreetwelve/PathTools?style=plastic)](https://github.com/Timthreetwelve/PathTools/releases/latest) 
+[![GitHub all releases](https://img.shields.io/github/downloads/Timthreetwelve/PathTools/total?style=plastic)](https://github.com/Timthreetwelve/PathTools/releases)  
+
 PathTools is a collection of tools in one application that can help you display and manage the system PATH environment variable. It can track and display changes, verify that the directories in the PATH actually exist and find duplicate entries.
 
 PathTools is my first foray into .NET 5.
